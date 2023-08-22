@@ -2,6 +2,8 @@ package com.examplebi.appconfig.configuration;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +22,8 @@ import com.thunisoft.summer.component.crypto.defaultDecrypt.DESedeDecryptor;
 @Configuration
 @EnableTransactionManagement
 public class DataSourceConfiguration {
+
+    private static Logger logger = LoggerFactory.getLogger(DataSourceConfiguration.class);
 
     private static final String ENCRYPT_HEAD = "ENCRYPT#";
 
@@ -47,7 +51,7 @@ public class DataSourceConfiguration {
 
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create().type(ComboPooledDataSource.class);
 
-        if (dataSourceUsername.startsWith("ENCRYPT_HEAD")) {
+        if (dataSourceUsername.startsWith(ENCRYPT_HEAD)) {
             String userAfterDecrtpted = decryptor.decrypt(dataSourceUsername.substring(ENCRYPT_HEAD.length()));
             dataSourceBuilder.username(userAfterDecrtpted);
         } else {
@@ -66,6 +70,7 @@ public class DataSourceConfiguration {
         dataSource.setPreferredTestQuery("select 1 ");
         dataSource.setInitialPoolSize(initPoolSize);
         dataSource.setMaxPoolSize(maxPoolSize);
+        logger.info("初始化数据源！");
         return dataSource;
     }
 

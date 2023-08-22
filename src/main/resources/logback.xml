@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+
+    <property resource="application.properties"/>
+
+    <property name="LOG_HOME" value="logs/appconfig" />
+    <property name="PORT" value="PORT" />
+<!--    <define name="PORT" class="com.thunisoft.logback.LogbackPortGetProperty" />-->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%-5thread] [%X{request.url}] [%c:%L] - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <appender name="allLog"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%-5thread] [%X{request.url}] [%c:%L] - %msg%n
+            </pattern>
+        </encoder>
+        <File>${LOG_HOME}/${appname}-all.log</File>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ${LOG_HOME}/${appname}-all.%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <appender name="fileWarnLog"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%-5thread] [%X{request.url}] [%c:%L] - %msg%n</pattern>
+        </encoder>
+        <File>${LOG_HOME}/${appname}-warn.log</File>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ${LOG_HOME}/${appname}-warn.%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <appender name="jdbcfile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${appname}_jdbc_${PORT}.log</File>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%-5thread] [%X{request.url}] %logger{20} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${appname}_jdb_${PORT}_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- log4jdbc 的配置 -->
+    <logger name="jdbc.sqltiming" level="WARN" additivity="false">
+        <appender-ref ref="jdbcfile"/>
+    </logger>
+    <logger name="jdbc.connection" level="WARN" additivity="false">
+        <appender-ref ref="jdbcfile"/>
+    </logger>
+    <logger name="jdbc.audit" level="WARN" additivity="false">
+        <appender-ref ref="jdbcfile"/>
+    </logger>
+    <logger name="jdbc.resultset" level="WARN" additivity="false">
+        <appender-ref ref="jdbcfile"/>
+    </logger>
+    <logger name="jdbc.sqlonly" level="WARN" additivity="false">
+        <appender-ref ref="jdbcfile"/>
+    </logger>
+    <logger name="jdbc.resultsettable" level="OFF"/>
+    
+    <appender name="apiAccessLog"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>
+                %date{yyyy-MM-dd HH:mm:ss.SSS} [%level] [%thread] %c.%M\(%F:%L\) %n%msg%n%n
+            </pattern>
+        </encoder>
+
+        <File>${LOG_HOME}/${appname}/${appname}_api_access_${PORT}.log</File>
+
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ${LOG_HOME}/${appname}/${appname}_api_access_${PORT}.%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+    </appender>
+    
+
+    <!-- 开发态相关的 log 配置 -->
+    <logger name="com.thunisoft.tap.appconfig" level="WARN" additivity="false">
+        <appender-ref ref="consoleLog"/>
+        <appender-ref ref="fileWarnLog"/>
+        <appender-ref ref="allLog"/>
+    </logger>
+    
+    <!-- api访问请求日志 -->
+    <logger name="com.thunisoft.tap.appconfig.filter.log" level="info" additivity="false">
+        <appender-ref ref="apiAccessLog"/>
+    </logger>
+    
+
+    <root level="info">
+        <appender-ref ref="consoleLog"/>
+        <appender-ref ref="fileWarnLog"/>
+        <appender-ref ref="allLog"/>
+    </root>
+</configuration>
