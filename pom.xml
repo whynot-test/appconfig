@@ -38,6 +38,22 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>5.3.21</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thunisoft.tap</groupId>
+            <artifactId>tap-commons-crypto</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <!--JDBC连接池-->
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.5.1</version>
+        </dependency>
     </dependencies>
 
     <build>
