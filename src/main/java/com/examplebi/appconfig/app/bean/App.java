@@ -6,6 +6,10 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.Map;
 
+import com.examplebi.appconfig.configinfo.ConfigMove;
+import com.examplebi.appconfig.group.bean.Group;
+import com.examplebi.appconfig.group.bean.GroupQuote;
+
 /**
  * @ClassName APP
  * @Description 子系统信息实体bean
@@ -68,13 +72,19 @@ public class App implements Serializable, Cloneable {
      * 当前子系统下所有分组，用于构建 子系统-分组 结构
      * key为分组的主键，value为分组对象
      */
-    private Map<String, String> configGroupMap;
+    private Map<String, Group> configGroupMap;
+
+    /**
+     * 当前子系统下所引用的分组 用于构建 子系统-引用分组 结构
+     * key为引用的分组的主键，value为引用分组Quote对象
+     */
+    private Map<String, GroupQuote> configQuoteMap;
 
     /**
      * 配置信息移动记录（导入，导出）
      * key：移动记录主键，value：移动记录对象
      */
-    private Map<String, String> configMoveMap;
+    private Map<String, ConfigMove> configMoveMap;
 
     public App() {
     }
@@ -189,19 +199,19 @@ public class App implements Serializable, Cloneable {
         this.cMcSystem = cMcSystem;
     }
 
-    public Map<String, String> getConfigGroupMap() {
+    public Map<String, Group> getConfigGroupMap() {
         return configGroupMap;
     }
 
-    public void setConfigGroupMap(Map<String, String> configGroupMap) {
+    public void setConfigGroupMap(Map<String, Group> configGroupMap) {
         this.configGroupMap = configGroupMap;
     }
 
-    public Map<String, String> getConfigMoveMap() {
+    public Map<String, ConfigMove> getConfigMoveMap() {
         return configMoveMap;
     }
 
-    public void setConfigMoveMap(Map<String, String> configMoveMap) {
+    public void setConfigMoveMap(Map<String, ConfigMove> configMoveMap) {
         this.configMoveMap = configMoveMap;
     }
 
