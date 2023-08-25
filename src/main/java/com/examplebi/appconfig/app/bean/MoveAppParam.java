@@ -1,7 +1,7 @@
 package com.examplebi.appconfig.app.bean;
 
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.Data;
 
 /**
  * @ClassName MoveAppParam
@@ -10,8 +10,7 @@ import lombok.Setter;
  * @Date 2023/8/22 0022 15:44
  * @Version 1.0
  **/
-@Getter
-@Setter
+@Data
 public class MoveAppParam {
     /**
      * 系统主键

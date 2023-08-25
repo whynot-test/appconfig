@@ -26,7 +26,7 @@ public class App implements Serializable, Cloneable {
     /**
      * 编号
      */
-    private String cBH;
+    private String cBh;
 
     /**
      * 子系统标识
@@ -105,14 +105,14 @@ public class App implements Serializable, Cloneable {
     /**
      * 导入构建子系统
      *
-     * @param cBH   标号
+     * @param cBh   标号
      * @param cXtbs 系统标识
      * @param cMc   名称
      * @param cSm   说明
      * @param nXssx 显示顺序
      */
-    public App(String cBH, String cXtbs, String cMc, String cSm, Integer nXssx) {
-        this.cBH = cBH;
+    public App(String cBh, String cXtbs, String cMc, String cSm, Integer nXssx) {
+        this.cBh = cBh;
         this.cXtbs = cXtbs;
         this.cMc = cMc;
         this.cSm = cSm;
@@ -127,12 +127,12 @@ public class App implements Serializable, Cloneable {
         App.logger = logger;
     }
 
-    public String getcBH() {
-        return cBH;
+    public String getcBh() {
+        return cBh;
     }
 
-    public void setcBH(String cBH) {
-        this.cBH = cBH;
+    public void setcBh(String cBh) {
+        this.cBh = cBh;
     }
 
     public String getcXtbs() {

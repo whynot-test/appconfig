@@ -2,5 +2,62 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.examplebi.appconfig.app.dao.mapper.AppMapper">
+    <resultMap id="BaseResultMap" type="com.examplebi.appconfig.app.bean.App">
+        <id property="cBh" column="C_BH"/><!--编号 -->
+        <result property="cXtbs" column="C_XTBS"/><!--子系统标识 -->
+        <result property="cMc" column="C_MC"/><!--子系统名称 -->
+        <result property="cSm" column="C_SM"/><!--子系统说明 -->
+        <result property="nXssx" column="N_XSSX"/><!--显示顺序-->
+        <result property="cBhSystem" column="C_BH_SYSTEM"/><!--所属系统编号 -->
+        <result property="cFzr" column="C_FZR"/><!--负责人 -->
+        <result property="cYfbm" column="C_YFBM"/><!--研发部门 -->
+    </resultMap>
 
+    <sql id="Base_Column_List">
+        C_BH,C_XTBS,C_MC,C_SM,N_XSSX,C_BH_SYSTEM,C_FZR,C_YFBM
+    </sql>
+
+    <sql id="sort_sql">
+        <choose>
+            <when test="dMDB != null and 'true'.toString() == dMDB.toString()">
+                nlssort(C_MC,'NLS_SORT=SCHINESE_PINYIN_M')
+            </when>
+            <otherwise>
+                C_MC
+            </otherwise>
+        </choose>
+    </sql>
+
+    <select id="selectBySystemId" resultType="java.lang.Integer">
+        select
+            count(C_BH)
+        from
+            DB_CONF.T_PZ_ZXTDY
+        where
+            C_BH_SYSTEM = #{systemId}
+    </select>
+    <select id="selectCanMoveApp" resultType="com.examplebi.appconfig.app.bean.App">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        DB_CONF.T_PZ_ZXTDY
+        where
+        C_BH_SYSTEM != #{systemId}
+        <if test="userId != null and userId != '' ">
+            and C_BH_SYSTEM in (select C_XTID from DB_CONF.T_PZ_AUTHORITY where  C_RYID = #{userId})
+        </if>
+        order by <include refid="sort_sql"/> , C_XTBS
+    </select>
+    <select id="selectAppByBs" resultType="com.examplebi.appconfig.app.bean.App">
+        select
+            APP.C_BH,APP.C_XTBS,APP.C_MC,APP.C_SM,APP.N_XSSX,APP.C_BH_SYSTEM,APP.C_FZR,APP.C_YFBM,SYS.C_MC as SYSTEM_MC
+        from
+            DB_CONF.T_PZ_ZXTDY as APP
+                inner join
+            DB_CONF.T_PZ_SYSTEM as SYS
+            on
+                APP.C_BH_SYSTEM = SYS.C_BH
+        where
+            APP.C_XTBS = #{bs}
+    </select>
 </mapper>

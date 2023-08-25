@@ -9,6 +9,7 @@ import com.examplebi.appconfig.app.bean.App;
 import com.examplebi.appconfig.app.dao.mapper.AppMapper;
 import com.examplebi.appconfig.common.consts.CacheConst;
 import com.examplebi.appconfig.common.dao.BaseDao;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author: bijunjian
@@ -16,6 +17,7 @@ import com.examplebi.appconfig.common.dao.BaseDao;
  * @version: V1
  * @Description: 子系统DAO层
  */
+@Service
 public class AppDao extends BaseDao {
 
     @Autowired

@@ -49,7 +49,7 @@ public class AppCache {
             return null;
         }
         App app = getAppByBs(appBs);
-        return app != null ? app.getcBH() : null;
+        return app != null ? app.getcBh() : null;
 
     }
 
