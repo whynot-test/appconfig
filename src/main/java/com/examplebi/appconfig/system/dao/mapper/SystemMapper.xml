@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.examplebi.appconfig.system.dao.mapper.SystemMapper">
+
+    <resultMap id="BaseResultMap" type="com.examplebi.appconfig.system.bean.System">
+        <id property="cBh" column="C_BH"></id>
+        <result property="cBs" column="C_BS"></result>
+        <result property="cFzr" column="C_FZR"></result>
+        <result property="cMc" column="C_MC"></result>
+        <result property="cSm" column="C_SM"></result>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        C_BH
+        ,C_BS,C_MC,C_SM,C_FZR
+    </sql>
+
+    <sql id="sort_sql">
+        <choose>
+            <when test="dMDB != null and 'true'.toString() == dMDB.toString()">
+                order by nlssort(C_MC,'NLS_SORT=SCHINESE_PINYIN_M')
+            </when>
+            <otherwise>
+                order by C_MC
+            </otherwise>
+        </choose>
+    </sql>
+    <insert id="insertSystem">
+        INSERT INTO DB_CONF.T_PZ_SYSTEM (<include refid="Base_Column_List"></include>)
+        VALUES (#{cBh},#{cBs},#{cMc},#{cSm},#{cFzr})
+    </insert>
+    <delete id="deleteSystemById">
+        DELETE
+        FROM DB_CONF.T_PZ_SYSTEM
+        WHERE C_BH = #{id}
+    </delete>
+    <select id="selectSystemBySystemId" resultType="com.examplebi.appconfig.system.bean.System">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        DB_CONF.T_PZ_SYSTEM
+        where
+        C_BH = #{systemId}
+    </select>
+    <select id="selectSystemByIds" resultType="com.examplebi.appconfig.system.bean.System">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        DB_CONF.T_PZ_SYSTEM
+        where
+        C_BH in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <select id="selectAllSystem" resultType="com.examplebi.appconfig.system.bean.System">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        DB_CONF.T_PZ_SYSTEM
+        <include refid="sort_sql"/>
+    </select>
+    <select id="selectSystem" resultType="com.examplebi.appconfig.system.bean.System">
+        select
+        TS.C_BH,TS.C_BS,TS.C_MC,TS.C_SM,TS.C_FZR
+        from
+        DB_CONF.T_PZ_SYSTEM as TS
+        <where>
+            <if test="userId != null and userId != ''">
+                TS.C_BH in (select C_XTID from DB_CONF.T_PZ_AUTHORITY where C_RYID = #{userId})
+            </if>
+        </where>
+        <include refid="sort_sql"/>
+    </select>
+
+    <update id="updateSystemById">
+        update DB_CONF.T_PZ_SYSTEM
+        set C_MC  = #{cMc},
+            C_SM  = #{cSm},
+            C_FZR = #{cFzr}
+        where C_BH = #{cBh}
+    </update>
+
+</mapper>

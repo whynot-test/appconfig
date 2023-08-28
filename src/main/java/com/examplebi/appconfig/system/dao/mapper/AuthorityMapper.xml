@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.examplebi.appconfig.system.dao.mapper.AuthorityMapper">
+
+    <resultMap id="BaseResultMap" type="com.examplebi.appconfig.system.bean.Authority">
+        <id property="cId" column="c_Id"/>
+        <result property="cRyId" column="C_RYID"></result>
+        <result property="cXtId" column="C_XTID"></result>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        C_ID,C_RYID,C_XTID
+    </sql>
+
+    <insert id="insertAuthority">
+        INSERT INTO DB_CONF.T_PZ_AUTHORITY (<include refid="Base_Column_List"/>)
+        VALUES (#{cId},#{cRyId},#{cXtId})
+    </insert>
+
+    <delete id="deleteAuthority">
+        DELETE
+        FROM DB_CONF.T_PZ_AUTHORITY
+        WHERE C_ID = #{id}
+    </delete>
+
+    <select id="selectAuthorityByUserId" resultType="java.lang.String">
+        SELECT C_XTID
+        FROM DB_CONF.T_PZ_AUTHORITY
+        WHERE C_RYID = #{userId}
+    </select>
+
+    <delete id="deleteAuthorityBySystemId">
+        DELETE
+        FROM DB_CONF.T_PZ_AUTHORITY
+        WHERE C_XTID = #{xtId}
+    </delete>
+
+</mapper>
