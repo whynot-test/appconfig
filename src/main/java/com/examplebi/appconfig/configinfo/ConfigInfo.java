@@ -1,6 +1,6 @@
 package com.examplebi.appconfig.configinfo;
 
-import com.examplebi.appconfig.configinfo.view.ConfigValueTreeVO;
+import com.examplebi.appconfig.configinfo.bean.view.ConfigValueTreeVO;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

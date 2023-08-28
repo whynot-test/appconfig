@@ -21,4 +21,8 @@ public final class CommonConst {
      * 系统标识和名称最大长度不能超多20
      */
     public static final Integer SYSTEM_BS_MC_LENGTH_MAX = 20;
+    /**
+     * 系统标准日期格式
+     */
+    public static final String C_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 }

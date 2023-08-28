@@ -1,4 +1,4 @@
-package com.examplebi.appconfig.configinfo.view;
+package com.examplebi.appconfig.configinfo.bean.view;
 
 import java.util.List;
 
