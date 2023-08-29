@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.examplebi.appconfig.group.dao.mapper.GroupMapper">
+
+    <resultMap id="BaseResultMap" type="com.examplebi.appconfig.group.bean.Group">
+        <id property="cBh" column="C_BH"/><!--编号 -->
+        <result property="cBhZxtdy" column="C_BH_ZXTDY"/><!--子系统标识 -->
+        <result property="cMc" column="C_MC"/><!--分组名称 -->
+        <result property="cSm" column="C_SM"/><!--分组说明 -->
+        <result property="nXssx" column="N_XSSX"/><!--显示顺序-->
+        <result property="cBhSystem" column="C_BH_SYSTEM"/><!--所属系统编号 -->
+        <result property="cFzbs" column="C_FZBS"/><!--分组标识 -->
+        <result property="cScope" column="C_SCOPE"/><!--分组共享范围 -->
+        <result property="cMcApp" column="C_MC_APP"/><!--子系统名称 -->
+        <result property="cMcSystem" column="C_MC_SYSTEM"/><!--系统名称 -->
+    </resultMap>
+
+    <!--可移动的分组实体映射关系-->
+    <resultMap id="MovableGroupBaseResultMap" type="com.examplebi.appconfig.group.bean.MovableAppVO">
+        <id property="cBh" column="C_BH"/><!--编号 -->
+        <result property="cMc" column="C_MC"/><!--子系统名称 -->
+        <collection property="groups" ofType="com.examplebi.appconfig.group.bean.Group">
+            <id property="cBh" column="C_GROUP_BH"/><!--编号 -->
+            <result property="cMc" column="C_GROUP_MC"/><!--分组名称 -->
+            <result property="cBhZxtdy" column="C_APP_BH"/><!--子系统编号 -->
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_BH,C_BH_ZXTDY,C_MC,C_SM,N_XSSX,C_BH_SYSTEM,C_FZBS,C_SCOPE,C_MC_SYSTEM,C_MC_APP
+    </sql>
+
+    <sql id="sort_sql">
+        <choose>
+            <when test="dMDB != null and 'true'.toString() == dMDB.toString()">
+                order by nlssort(C_MC_SYSTEM,'NLS_SORT=SCHINESE_PINYIN_M'), nlssort(C_MC_APP,'NLS_SORT=SCHINESE_PINYIN_M')
+            </when>
+            <otherwise>
+                order by C_MC_SYSTEM, C_MC_APP
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="sort_sql_more">
+        <choose>
+            <when test="dMDB != null and 'true'.toString() == dMDB.toString()">
+                order by nlssort(C_MC_SYSTEM,'NLS_SORT=SCHINESE_PINYIN_M'),
+                nlssort(C_MC_APP,'NLS_SORT=SCHINESE_PINYIN_M'), nlssort(C_MC,'NLS_SORT=SCHINESE_PINYIN_M')
+            </when>
+            <otherwise>
+                order by C_MC_SYSTEM, C_MC_APP, C_MC
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="sort_sql_group_name">
+        <choose>
+            <when test="dMDB != null and 'true'.toString() == dMDB.toString()">
+                order by nlssort(C_MC,'NLS_SORT=SCHINESE_PINYIN_M'), nlssort(C_BH_SYSTEM,'NLS_SORT=SCHINESE_PINYIN_M'),
+                nlssort(C_BH_ZXTDY,'NLS_SORT=SCHINESE_PINYIN_M')
+            </when>
+            <otherwise>
+                order by C_MC, C_BH_SYSTEM, C_BH_ZXTDY
+            </otherwise>
+        </choose>
+    </sql>
+
+    <select id="selectGroupByAppBh" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        DB_CONF.T_PZ_PZFZ
+        where
+        C_BH_ZXTDY = #{cBhZxtdy}
+        <include refid="sort_sql_more"/>
+    </select>
+</mapper>

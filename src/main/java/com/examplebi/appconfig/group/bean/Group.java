@@ -32,12 +32,12 @@ public class Group implements Serializable {
     /**
      * 分组名称
      */
-    private String c_Mc;
+    private String cMc;
 
     /**
      * 分组说明
      */
-    private String c_Sm;
+    private String cSm;
 
     /**
      * 显示顺序
@@ -77,4 +77,99 @@ public class Group implements Serializable {
     private String type;
 
 
+    public String getcBh() {
+        return cBh;
+    }
+
+    public void setcBh(String cBh) {
+        this.cBh = cBh;
+    }
+
+    public String getcBhZxtdy() {
+        return cBhZxtdy;
+    }
+
+    public void setcBhZxtdy(String cBhZxtdy) {
+        this.cBhZxtdy = cBhZxtdy;
+    }
+
+    public String getcFzbs() {
+        return cFzbs;
+    }
+
+    public void setcFzbs(String cFzbs) {
+        this.cFzbs = cFzbs;
+    }
+
+    public String getcMc() {
+        return cMc;
+    }
+
+    public void setcMc(String cMc) {
+        this.cMc = cMc;
+    }
+
+    public String getcSm() {
+        return cSm;
+    }
+
+    public void setcSm(String cSm) {
+        this.cSm = cSm;
+    }
+
+    public String getnXssx() {
+        return nXssx;
+    }
+
+    public void setnXssx(String nXssx) {
+        this.nXssx = nXssx;
+    }
+
+    public String getcBhSystem() {
+        return cBhSystem;
+    }
+
+    public void setcBhSystem(String cBhSystem) {
+        this.cBhSystem = cBhSystem;
+    }
+
+    public String getcScope() {
+        return cScope;
+    }
+
+    public void setcScope(String cScope) {
+        this.cScope = cScope;
+    }
+
+    public Map<String, String> getConfigMap() {
+        return configMap;
+    }
+
+    public void setConfigMap(Map<String, String> configMap) {
+        this.configMap = configMap;
+    }
+
+    public String getcMcApp() {
+        return cMcApp;
+    }
+
+    public void setcMcApp(String cMcApp) {
+        this.cMcApp = cMcApp;
+    }
+
+    public String getcMcSystem() {
+        return cMcSystem;
+    }
+
+    public void setcMcSystem(String cMcSystem) {
+        this.cMcSystem = cMcSystem;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }
