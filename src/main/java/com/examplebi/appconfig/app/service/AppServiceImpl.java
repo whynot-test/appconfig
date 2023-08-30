@@ -6,6 +6,8 @@ import com.examplebi.appconfig.app.bean.MoveAppParam;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 /**
  * @ClassName AppServiceImpl
  * @Description 子系统实现类
@@ -13,6 +15,7 @@ import java.util.Map;
  * @Date 2023/8/25 0025 18:30
  * @Version 1.0
  **/
+@Service
 public class AppServiceImpl implements AppService{
     /**
      * 根据当前登录人员ID和所在系统id

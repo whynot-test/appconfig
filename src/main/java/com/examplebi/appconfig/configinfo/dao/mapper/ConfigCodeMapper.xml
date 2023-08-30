@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.examplebi.appconfig.configinfo.dao.mapper.ConfigCodeMapper">
+
+
+    <resultMap id="BaseResultMap" type="com.examplebi.appconfig.configinfo.bean.ConfigCode">
+        <id property="cBh" column="C_BH"></id>
+        <result property="cPzdm" column="C_PZDM"></result>
+        <result property="cDm" column="C_DM"></result>
+        <result property="cDmsm" column="C_DMSM"></result>
+        <result property="nXssx" column="N_XSSX"></result>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_BH, C_PZDM, C_DM, C_DMSM, N_XSSX
+    </sql>
+    <select id="selectAllConfigCode" resultType="com.examplebi.appconfig.configinfo.ConfigCode">
+
+    </select>
+</mapper>
